@@ -66,10 +66,16 @@ BACKUP_ID=`echo $BACKUPS_RESPONSE | jq '.backups[0].backupId' --raw-output`
 LATEST_BACKUP_FILE="${WORLD_DIRECTORY}/backup_${BACKUP_ID}.tar.gz"
 if [ ! -f "$LATEST_BACKUP_FILE" ]
 then
-    echo "Downloading latest realms world"
     WORLD_RESPONSE=`curl -s https://pc.realms.minecraft.net/worlds/$WORLD_ID/slot/$ACTIVE_SLOT/download --header "$AUTH_HEADER"`
-    DOWNLOAD_LINK=`echo $WORLD_RESPONSE | jq '.downloadLink' --raw-output`
-    curl $DOWNLOAD_LINK --output "$LATEST_BACKUP_FILE"
+    if [ "$WORLD_RESPONSE" = "Retry again later" ]
+    then
+        echo "Retry again later"
+    else
+        echo "Downloading latest realms world"
+        DOWNLOAD_LINK=`echo $WORLD_RESPONSE | jq '.downloadLink' --raw-output`
+        curl $DOWNLOAD_LINK --output "$LATEST_BACKUP_FILE"
+
+    fi
 else
     echo "Realms world is already up-to-date"
 fi
@@ -83,8 +89,11 @@ INVALIDATE_BODY=`jq -n --arg accessToken "$ACCESS_TOKEN" --arg clientToken "$CLI
 echo "Invalidating API access token"
 curl -s --data "$INVALIDATE_BODY" https://authserver.mojang.com/invalidate --header "Content-Type:application/json"
 
-#Removing old decompressed world
-rm -rf $WORKING_DIRECTORY/realms_world/world
+if [ -f "$LATEST_BACKUP_FILE" ]
+then
+    #Removing old decompressed world
+    rm -rf $WORKING_DIRECTORY/realms_world/world
 
-#Decompressing latest world backup
-tar -xf $LATEST_BACKUP_FILE -C $WORLD_DIRECTORY
+    #Decompressing latest world backup
+    tar -xf $LATEST_BACKUP_FILE -C $WORLD_DIRECTORY
+fi
