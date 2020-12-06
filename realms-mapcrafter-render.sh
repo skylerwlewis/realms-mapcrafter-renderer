@@ -17,7 +17,7 @@ if [ "$#" -ne 6 ]; then
     exit
 fi
 
-CURRENT_DIRECTORY="$(dirname "$0")"
+CURRENT_DIRECTORY="$(dirname "$(realpath "$0")")"
 
 WORKING_DIRECTORY="$1"
 
@@ -29,7 +29,7 @@ MAPCRAFTER_REPO="$5"
 MAPCRAFTER_BRANCH="$6"
 
 #Create working directory
-mkdir -p $WORKING_DIRECTORY
+mkdir -p "$WORKING_DIRECTORY"
 
 #Download latest world backup if necessary
 "$CURRENT_DIRECTORY/update-realms-world.sh" "$WORKING_DIRECTORY/realms_world" "$MOJANG_USERNAME" "$MOJANG_PASSWORD" $MINECRAFT_VERSION
