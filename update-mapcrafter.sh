@@ -16,15 +16,15 @@ if [ "$#" -ne 3 ]; then
     exit
 fi
 
-MAPCRAFTER_DIRECTORY=$1
+MAPCRAFTER_DIRECTORY="$1"
 
-MAPCRAFTER_REPO=$2
-MAPCRAFTER_BRANCH=$3
+MAPCRAFTER_REPO="$2"
+MAPCRAFTER_BRANCH="$3"
 
 #Update or clone Mapcrafter and build if necessary
 if [ -d "$MAPCRAFTER_DIRECTORY" ] 
 then
-    pushd $MAPCRAFTER_DIRECTORY > /dev/null
+    pushd "$MAPCRAFTER_DIRECTORY" > /dev/null
     git fetch origin
     if [[ `git log HEAD..origin/$MAPCRAFTER_BRANCH --oneline` != "" ]]
     then
@@ -40,9 +40,9 @@ then
     popd > /dev/null
 else
     echo "Cloning and building Mapcrafter"
-    git clone $MAPCRAFTER_REPO --branch $MAPCRAFTER_BRANCH $MAPCRAFTER_DIRECTORY
+    git clone $MAPCRAFTER_REPO --branch $MAPCRAFTER_BRANCH "$MAPCRAFTER_DIRECTORY"
     echo "Building Mapcrafter"
-    pushd $MAPCRAFTER_DIRECTORY > /dev/null
+    pushd "$MAPCRAFTER_DIRECTORY" > /dev/null
     cmake .
     make
     popd > /dev/null

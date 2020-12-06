@@ -16,14 +16,14 @@ if [ "$#" -ne 4 ]; then
     exit
 fi
 
-WORLD_DIRECTORY=$1
+WORLD_DIRECTORY="$1"
 
-MOJANG_USERNAME=$2
-MOJANG_PASSWORD=$3
-MINECRAFT_VERSION=$4
+MOJANG_USERNAME="$2"
+MOJANG_PASSWORD="$3"
+MINECRAFT_VERSION="$4"
 
 #Make world directory
-mkdir -p $WORLD_DIRECTORY
+mkdir -p "$WORLD_DIRECTORY"
 
 #Authenticating with Mojang
 CLIENT_TOKEN=`uuidgen`
@@ -84,7 +84,7 @@ echo "Invalidating API access token"
 curl -s --data "$INVALIDATE_BODY" https://authserver.mojang.com/invalidate --header "Content-Type:application/json"
 
 #Removing old decompressed world
-rm -rf $WORKING_DIRECTORY/realms_world/world
+rm -rf "$WORKING_DIRECTORY/realms_world/world"
 
 #Decompressing latest world backup
-tar -xf $LATEST_BACKUP_FILE -C $WORLD_DIRECTORY
+tar -xf "$LATEST_BACKUP_FILE" -C "$WORLD_DIRECTORY"
