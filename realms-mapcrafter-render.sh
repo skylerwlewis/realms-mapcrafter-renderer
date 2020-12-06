@@ -17,29 +17,30 @@ if [ "$#" -ne 6 ]; then
     exit
 fi
 
-CURRENT_DIRECTORY="$(dirname $(realpath $0))"
-WORKING_DIRECTORY=$1
+CURRENT_DIRECTORY="$(dirname "$(realpath "$0")")"
 
-MOJANG_USERNAME=$2
-MOJANG_PASSWORD=$3
-MINECRAFT_VERSION=$4
+WORKING_DIRECTORY="$1"
 
-MAPCRAFTER_REPO=$5
-MAPCRAFTER_BRANCH=$6
+MOJANG_USERNAME="$2"
+MOJANG_PASSWORD="$3"
+MINECRAFT_VERSION="$4"
+
+MAPCRAFTER_REPO="$5"
+MAPCRAFTER_BRANCH="$6"
 
 #Create working directory
-mkdir -p $WORKING_DIRECTORY
+mkdir -p "$WORKING_DIRECTORY"
 
 #Download latest world backup if necessary
-$CURRENT_DIRECTORY/update-realms-world.sh $WORKING_DIRECTORY/realms_world $MOJANG_USERNAME $MOJANG_PASSWORD $MINECRAFT_VERSION
+"$CURRENT_DIRECTORY/update-realms-world.sh" "$WORKING_DIRECTORY/realms_world" "$MOJANG_USERNAME" "$MOJANG_PASSWORD" $MINECRAFT_VERSION
 
 #Cloning or updating Mapcrafter repo and building if necessary
-$CURRENT_DIRECTORY/update-mapcrafter.sh $WORKING_DIRECTORY/mapcrafter $MAPCRAFTER_REPO $MAPCRAFTER_BRANCH
+"$CURRENT_DIRECTORY/update-mapcrafter.sh" "$WORKING_DIRECTORY/mapcrafter" $MAPCRAFTER_REPO $MAPCRAFTER_BRANCH
 
 #Create Mapcrafter configuration file if necessary
-$CURRENT_DIRECTORY/create-mapcrafter-config.sh $WORKING_DIRECTORY/mapcrafter.conf $WORKING_DIRECTORY/realms_world/world $WORKING_DIRECTORY/output
+"$CURRENT_DIRECTORY/create-mapcrafter-config.sh" "$WORKING_DIRECTORY/mapcrafter.conf" "$WORKING_DIRECTORY/realms_world/world" "$WORKING_DIRECTORY/output"
 
-mkdir -p $WORKING_DIRECTORY/output
+mkdir -p "$WORKING_DIRECTORY/output"
 
 #Running Mapcrafter
-$WORKING_DIRECTORY/mapcrafter/src/mapcrafter -c $WORKING_DIRECTORY/mapcrafter.conf -j 4
+"$WORKING_DIRECTORY/mapcrafter/src/mapcrafter" -c "$WORKING_DIRECTORY/mapcrafter.conf" -j 4

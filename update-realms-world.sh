@@ -16,14 +16,14 @@ if [ "$#" -ne 4 ]; then
     exit
 fi
 
-WORLD_DIRECTORY=$1
+WORLD_DIRECTORY="$1"
 
-MOJANG_USERNAME=$2
-MOJANG_PASSWORD=$3
-MINECRAFT_VERSION=$4
+MOJANG_USERNAME="$2"
+MOJANG_PASSWORD="$3"
+MINECRAFT_VERSION="$4"
 
 #Make world directory
-mkdir -p $WORLD_DIRECTORY
+mkdir -p "$WORLD_DIRECTORY"
 
 #Authenticating with Mojang
 CLIENT_TOKEN=`uuidgen`

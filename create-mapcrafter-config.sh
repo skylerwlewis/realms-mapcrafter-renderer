@@ -16,35 +16,35 @@ if [ "$#" -ne 3 ]; then
     exit
 fi
 
-CONFIG_FILE=$1
+CONFIG_FILE="$1"
 
-INPUT_WORLD_DIRECTORY=$2
-OUTPUT_DIRECTORY=$3
+INPUT_WORLD_DIRECTORY="$2"
+OUTPUT_DIRECTORY="$3"
 
-echo "output_dir = $OUTPUT_DIRECTORY" > $CONFIG_FILE
+echo "output_dir = $OUTPUT_DIRECTORY" > "$CONFIG_FILE"
 
-echo "[global:map]" >> $CONFIG_FILE
-echo "render_mode = daylight" >> $CONFIG_FILE
-echo "rotations = top-left top-right bottom-right bottom-left" >> $CONFIG_FILE
+echo "[global:map]" >> "$CONFIG_FILE"
+echo "render_mode = daylight" >> "$CONFIG_FILE"
+echo "rotations = top-left top-right bottom-right bottom-left" >> "$CONFIG_FILE"
 
-echo "[global:world]" >> $CONFIG_FILE
-echo "input_dir = $INPUT_WORLD_DIRECTORY" >> $CONFIG_FILE
+echo "[global:world]" >> "$CONFIG_FILE"
+echo "input_dir = $INPUT_WORLD_DIRECTORY" >> "$CONFIG_FILE"
 
-echo "[world:overworld]" >> $CONFIG_FILE
-echo "dimension = overworld" >> $CONFIG_FILE
+echo "[world:overworld]" >> "$CONFIG_FILE"
+echo "dimension = overworld" >> "$CONFIG_FILE"
 
-echo "[world:end]" >> $CONFIG_FILE
-echo "dimension = end" >> $CONFIG_FILE
+echo "[world:end]" >> "$CONFIG_FILE"
+echo "dimension = end" >> "$CONFIG_FILE"
 
-echo "[map:overworld_day]" >> $CONFIG_FILE
-echo "world = overworld" >> $CONFIG_FILE
-echo "name = Overworld - Day" >> $CONFIG_FILE
+echo "[map:overworld_day]" >> "$CONFIG_FILE"
+echo "world = overworld" >> "$CONFIG_FILE"
+echo "name = Overworld - Day" >> "$CONFIG_FILE"
 
-echo "[map:overworld_night]" >> $CONFIG_FILE
-echo "world = overworld" >> $CONFIG_FILE
-echo "name = Overworld - Night" >> $CONFIG_FILE
-echo "render_mode = nightlight" >> $CONFIG_FILE
+echo "[map:overworld_night]" >> "$CONFIG_FILE"
+echo "world = overworld" >> "$CONFIG_FILE"
+echo "name = Overworld - Night" >> "$CONFIG_FILE"
+echo "render_mode = nightlight" >> "$CONFIG_FILE"
 
-echo "[map:the_end]" >> $CONFIG_FILE
-echo "world = end" >> $CONFIG_FILE
-echo "name = The End" >> $CONFIG_FILE
+echo "[map:the_end]" >> "$CONFIG_FILE"
+echo "world = end" >> "$CONFIG_FILE"
+echo "name = The End" >> "$CONFIG_FILE"
