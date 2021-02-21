@@ -47,7 +47,6 @@ DOWNLOAD_TEXTURES=false
 if [[ $MINECRAFT_VERSION =~ $RELEASE_PATTERN ]]
 then
     VERSION="${BASH_REMATCH[1]}"
-    echo $VERSION
     if [ 1 -eq "$(echo "${VERSION} < 1.13" | bc)" ]
     then
         DOWNLOAD_TEXTURES=true
