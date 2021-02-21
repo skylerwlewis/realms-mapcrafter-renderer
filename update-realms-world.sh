@@ -92,7 +92,7 @@ curl -s --data "$INVALIDATE_BODY" https://authserver.mojang.com/invalidate --hea
 if [ -f "$LATEST_BACKUP_FILE" ]
 then
     #Removing old decompressed world
-    rm -rf "$WORKING_DIRECTORY/realms_world/world"
+    rm -rf "$WORLD_DIRECTORY/world"
 
     #Decompressing latest world backup
     tar -xf "$LATEST_BACKUP_FILE" -C "$WORLD_DIRECTORY"

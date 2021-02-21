@@ -40,7 +40,34 @@ mkdir -p "$WORKING_DIRECTORY"
 #Create Mapcrafter configuration file if necessary
 "$CURRENT_DIRECTORY/create-mapcrafter-config.sh" "$WORKING_DIRECTORY/mapcrafter.conf" "$WORKING_DIRECTORY/realms_world/world" "$WORKING_DIRECTORY/output"
 
+#Update Mapcrafter textures with specific client version for pre-1.13 versions
+RELEASE_PATTERN="^([0-9]\.[0-9]+)[0-9\.]*-?.*$"
+SNAPSHOT_PATTERN="^([0-9]+)w([0-9]+)[a-z]$"
+DOWNLOAD_TEXTURES=false
+if [[ $MINECRAFT_VERSION =~ $RELEASE_PATTERN ]]
+then
+    VERSION="${BASH_REMATCH[1]}"
+    echo $VERSION
+    if [ 1 -eq "$(echo "${VERSION} < 1.13" | bc)" ]
+    then
+        DOWNLOAD_TEXTURES=true
+    fi
+elif [[ $MINECRAFT_VERSION =~ $SNAPSHOT_PATTERN ]]
+then
+    VERSION="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+    #17w43a is the first 1.13 snapshot
+    if [ 1 -eq "$(echo "${VERSION} < 1743" | bc)" ]
+    then
+        DOWNLOAD_TEXTURES=true
+    fi
+fi
+
+if $DOWNLOAD_TEXTURES
+then
+    "$CURRENT_DIRECTORY/get-client-textures.sh" "$WORKING_DIRECTORY/clients" "$WORKING_DIRECTORY/mapcrafter/src/tools/mapcrafter_textures.py"    "$WORKING_DIRECTORY/mapcrafter/src/data" $MINECRAFT_VERSION
+fi
+
 mkdir -p "$WORKING_DIRECTORY/output"
 
 #Running Mapcrafter
-"$WORKING_DIRECTORY/mapcrafter/src/mapcrafter" -c "$WORKING_DIRECTORY/mapcrafter.conf" -j 4
+"$WORKING_DIRECTORY/mapcrafter/src/mapcrafter" -c "$WORKING_DIRECTORY/mapcrafter.conf" -j 8
