@@ -5,11 +5,13 @@ This group of Bash scripts does the following:
 1. Downloads the latest Minecraft Realms world if it more recent than the local copy
 2. Clones (or updates) and builds the latest copy of Mapcrafter from Github
 3. Creates the Mapcrafter configuration file
-4. Runs Mapcrafter on the local copy of the Minecraft Realms world to generate an awesome web-based map experience!
+4. Downloads the Minecraft client for the specified Minecraft version and runs mapcrafter_textures.py to extract textures (runs only for Minecraft versions prior to 1.13)
+5. Runs Mapcrafter on the local copy of the Minecraft Realms world to generate an awesome web-based map experience!
 ---
 ### Prerequisites
 - Bash
 - [jq](https://github.com/stedolan/jq)
+- python3
 ---
 ### Tools used
 - [Mojang Authentication](https://wiki.vg/Authentication)
