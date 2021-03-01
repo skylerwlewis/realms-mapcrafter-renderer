@@ -13,8 +13,11 @@ This group of Bash scripts does the following:
 - [jq](https://github.com/stedolan/jq)
 - python3
 ---
-### Tools used
+### Services used
 - [Mojang Authentication](https://wiki.vg/Authentication)
 - [Minecraft Realms API](https://wiki.vg/Realms_API)
+- [MCVersions.net](https://mcversions.net)
+---
+### Tools used
 - [Mapcrafter](https://github.com/mapcrafter/mapcrafter)
     - The owner of the Mapcrafter project has taken a hiatus, so for now I am using a [separate fork](https://github.com/miclav/mapcrafter) with more recent updates from miclav. (Thank you!)
