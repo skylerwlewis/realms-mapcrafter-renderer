@@ -67,15 +67,17 @@ LATEST_BACKUP_FILE="${WORLD_DIRECTORY}/backup_${BACKUP_ID}.tar.gz"
 if [ ! -f "$LATEST_BACKUP_FILE" ]
 then
     WORLD_RESPONSE=`curl -s https://pc.realms.minecraft.net/worlds/$WORLD_ID/slot/$ACTIVE_SLOT/download --header "$AUTH_HEADER"`
-    if [ "$WORLD_RESPONSE" = "Retry again later" ]
-    then
-        echo "Retry again later"
-    else
-        echo "Downloading latest realms world"
-        DOWNLOAD_LINK=`echo $WORLD_RESPONSE | jq '.downloadLink' --raw-output`
-        curl $DOWNLOAD_LINK --output "$LATEST_BACKUP_FILE"
+    while [ "$WORLD_RESPONSE" = "Retry again later" ]
+    do
+        echo "Realms said to retry again later, waiting 30 seconds"
+        sleep 30
+	WORLD_RESPONSE=`curl -s https://pc.realms.minecraft.net/worlds/$WORLD_ID/slot/$ACTIVE_SLOT/download --header "$AUTH_HEADER"`
+    done
 
-    fi
+    echo "Downloading latest realms world"
+    DOWNLOAD_LINK=`echo $WORLD_RESPONSE | jq '.downloadLink' --raw-output`
+    curl $DOWNLOAD_LINK --output "$LATEST_BACKUP_FILE"
+
 else
     echo "Realms world is already up-to-date"
 fi
