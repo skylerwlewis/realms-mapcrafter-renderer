@@ -1,3 +1,6 @@
+> [!NOTE]
+> I no longer use this project, so I am archiving this project's repository. I am keeping it here as a reference for the future.
+
 # Minecraft Realms Mapcrafter Renderer
 
 This group of Bash scripts does the following:
